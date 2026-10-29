@@ -2,10 +2,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#10152b">
-  <meta name="description" content="PS4 EMULATOR — a personal game library and emulator project.">
+  <meta name="description" content="PS4 EMULATOR game library and browser launcher.">
   <title>PS4 EMULATOR</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
@@ -19,50 +19,91 @@
 
   <main>
     <section class="hero">
-      <div class="eyebrow">PERSONAL GAMING LIBRARY</div>
-      <h1>Your games.<br><span>Your library.</span></h1>
-      <p>Organize your game files in one place.
-        Actual PS4 emulation requires a compatible emulation core.</p>
-      <button id="choose" class="primary">＋ Select game files</button>
-      <input id="files" type="file" accept=".pkg,.iso,.bin,.elf"
-        multiple hidden>
-      <p class="small">Files are selected locally in your browser.
-        This launcher does not upload them.</p>
+      <div class="eyebrow">YOUR PERSONAL GAME STATION</div>
+      <h1>Play your way.<br><span>Build your library.</span></h1>
+      <p>
+        A Chromebook-friendly game library with controller detection,
+        fullscreen, and offline launcher support.
+      </p>
+      <div class="actions">
+        <button id="choose" class="primary">＋ Add game files</button>
+        <button id="fullscreen" class="secondary">⛶ Fullscreen</button>
+      </div>
+      <input id="files" type="file"
+        accept=".pkg,.iso,.bin,.elf,.img" multiple hidden>
+      <p class="small">
+        File names and details are stored locally. Game files are not uploaded.
+      </p>
     </section>
 
-    <section class="library">
+    <section class="panel">
       <div class="section-heading">
         <div>
           <div class="eyebrow">YOUR COLLECTION</div>
           <h2>Game library</h2>
         </div>
-        <span id="count" class="count">0 FILES</span>
+        <span id="count" class="count">0 GAMES</span>
       </div>
 
-      <div id="empty" class="empty">
+      <div id="storage-status" class="substatus" role="status">
+        Opening local library…
+      </div>
+
+      <div id="empty" class="empty" hidden>
         <div class="empty-icon">◇</div>
-        <h3>Your library is waiting</h3>
-        <p>Select a game file to see its name and size here.</p>
+        <h3>Your library is empty</h3>
+        <p>Add a game file to register it in your local library.</p>
       </div>
 
       <div id="games" class="games"></div>
+
+      <div class="library-actions">
+        <button id="refresh" class="secondary">Refresh library</button>
+        <button id="clear" class="danger">Clear library entries</button>
+      </div>
     </section>
 
-    <section class="notice">
-      <h2>Emulation status</h2>
-      <p id="emulator-status">
-        No PS4 emulation core is connected. Selecting a file does not
-        install or launch a game.
+    <section class="panel">
+      <div class="eyebrow">CONTROLLER</div>
+      <h2>Gamepad status</h2>
+      <div class="controller-card">
+        <div class="controller-symbol">🎮</div>
+        <div>
+          <h3 id="gamepad-name">No controller detected</h3>
+          <p id="gamepad-details">
+            Connect a USB or Bluetooth controller, then press a button.
+          </p>
+        </div>
+      </div>
+      <p class="small">
+        Controller detection confirms browser access only. Gamepad input
+        is not connected to a PS4 emulator core.
+      </p>
+    </section>
+
+    <section class="panel emulator-panel">
+      <div class="eyebrow">EMULATION ENGINE</div>
+      <h2>PS4 compatibility</h2>
+      <div class="engine-status">
+        <span class="status-dot"></span>
+        <span>NO EMULATION CORE CONNECTED</span>
+      </div>
+      <p>
+        This website does not currently install, decrypt, or run PS4 games.
+        Selecting a PKG file only adds its metadata to your library.
       </p>
       <p class="small">
-        PKG support, firmware requirements, and game compatibility depend
-        on the real emulator. This web app does not decrypt, install, or
-        execute PS4 packages.
+        Real game execution requires a compatible PS4 emulator, supported
+        system requirements, and any required legitimate game data and
+        firmware. PKG files are not equivalent to universally playable ROMs.
       </p>
     </section>
   </main>
 
-  <footer>PS4 EMULATOR · PERSONAL PROJECT</footer>
-  <script src="./app.js"></script>
+  <footer>
+    PS4 EMULATOR · GITHUB PAGES · LOCAL LIBRARY
+  </footer>
+
+  <script src="./app.js" defer></script>
 </body>
 </html>
