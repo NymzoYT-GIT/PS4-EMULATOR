@@ -1,5 +1,7 @@
 
-const CACHE_NAME = "ps4-emulator-shell-v1";
+"use strict";
+
+const CACHE_NAME = "ps4-emulator-shell-v2";
 
 const APP_FILES = [
   "./",
@@ -20,13 +22,16 @@ self.addEventListener("install", event => {
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
+    caches.keys()
+      .then(keys => Promise.all(
         keys
-          .filter(key => key !== CACHE_NAME)
+          .filter(key =>
+            key.startsWith("ps4-emulator-shell-") &&
+            key !== CACHE_NAME
+          )
           .map(key => caches.delete(key))
-      )
-    ).then(() => self.clients.claim())
+      ))
+      .then(() => self.clients.claim())
   );
 });
 
@@ -36,25 +41,30 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
+
   if (url.origin !== self.location.origin) return;
 
-  event.respondWith(
-    caches.match(request).then(cached => {
-      if (cached) return cached;
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(request);
 
-      return fetch(request).then(response => {
-        if (response.ok && response.type === "basic") {
-          const copy = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => cache.put(request, copy));
-        }
-        return response;
-      });
-    }).catch(() => {
-      if (request.mode === "navigate") {
-        return caches.match("./index.html");
+    if (cached) return cached;
+
+    try {
+      const response = await fetch(request);
+
+      if (response.ok && response.type === "basic") {
+        await cache.put(request, response.clone());
       }
+
+      return response;
+    } catch (error) {
+      if (request.mode === "navigate") {
+        return (await cache.match("./index.html")) ||
+          Response.error();
+      }
+
       return Response.error();
-    })
-  );
+    }
+  })());
 });
