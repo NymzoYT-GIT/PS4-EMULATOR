@@ -1,11 +1,13 @@
+
 {
   "id": "./",
   "name": "PS4 EMULATOR",
-  "short_name": "PS4 EMULATOR",
-  "description": "Personal PS4 game library launcher",
+  "short_name": "PS4",
+  "description": "Personal game library and PS4 emulator project",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#0b0e1b",
   "theme_color": "#10152b",
   "icons": [
