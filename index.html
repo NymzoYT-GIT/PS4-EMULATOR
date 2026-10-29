@@ -4,97 +4,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#07152e">
+  <meta name="theme-color" content="#10152b">
+  <meta name="description" content="PS4 EMULATOR — a personal game library and emulator project.">
   <title>PS4 EMULATOR</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="game.js" defer></script>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div class="console">
-    <header class="topbar">
-      <div class="brand"><span class="ps-symbol">PS</span><span>4</span></div>
-      <div class="status">
-        <span id="clock">--:--</span>
-        <span class="status-dot"></span>
-        <span>CONSOLE ONLINE</span>
+  <header class="topbar">
+    <a class="brand" href="./">PS4 <span>EMULATOR</span></a>
+    <span id="connection" class="status">STARTING</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">PERSONAL GAMING LIBRARY</div>
+      <h1>Your games.<br><span>Your library.</span></h1>
+      <p>Organize your game files in one place.
+        Actual PS4 emulation requires a compatible emulation core.</p>
+      <button id="choose" class="primary">＋ Select game files</button>
+      <input id="files" type="file" accept=".pkg,.iso,.bin,.elf"
+        multiple hidden>
+      <p class="small">Files are selected locally in your browser.
+        This launcher does not upload them.</p>
+    </section>
+
+    <section class="library">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">YOUR COLLECTION</div>
+          <h2>Game library</h2>
+        </div>
+        <span id="count" class="count">0 FILES</span>
       </div>
-    </header>
 
-    <main>
-      <section id="homeScreen">
-        <div class="welcome">
-          <p class="eyebrow">YOUR PERSONAL CONSOLE</p>
-          <h1>Welcome back.</h1>
-          <p>Select a tile to get started.</p>
-        </div>
-
-        <nav class="tiles" id="tiles" aria-label="Console menu">
-          <button class="tile active" data-page="library">
-            <span class="tile-icon">▦</span>
-            <span class="tile-title">Game Library</span>
-            <span class="tile-sub">Your collection</span>
-          </button>
-          <button class="tile" data-page="play">
-            <span class="tile-icon">▶</span>
-            <span class="tile-title">Browser Playground</span>
-            <span class="tile-sub">Play a built-in demo</span>
-          </button>
-          <button class="tile" data-page="settings">
-            <span class="tile-icon">⚙</span>
-            <span class="tile-title">Settings</span>
-            <span class="tile-sub">Keyboard and display</span>
-          </button>
-          <button class="tile" data-page="about">
-            <span class="tile-icon">ⓘ</span>
-            <span class="tile-title">About</span>
-            <span class="tile-sub">Project information</span>
-          </button>
-        </nav>
-
-        <section class="content-panel" id="contentPanel" aria-live="polite">
-          <p class="eyebrow">GAME LIBRARY</p>
-          <h2>Your games</h2>
-          <p>This starter version includes a playable browser demo.
-            It does not yet load or emulate PS4 game files.</p>
-          <div class="game-card">
-            <div class="cover demo-cover">PIXEL<br>RUNNER</div>
-            <div class="game-info">
-              <h3>Pixel Runner</h3>
-              <p>An original mini-game included with this project.</p>
-              <button class="primary" id="launchDemo">Play Demo</button>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <section id="playScreen" class="hidden">
-        <button class="back-button" id="backHome">← Back to Home (Esc)</button>
-        <div class="play-header">
-          <p class="eyebrow">BUILT-IN BROWSER GAME</p>
-          <h1>Pixel Runner</h1>
-          <p>Move with the arrow keys or A and D. Jump with Space.</p>
-        </div>
-        <div class="game-wrap">
-          <canvas id="gameCanvas" width="800" height="360"
-            aria-label="Pixel Runner game"></canvas>
-          <div class="game-controls">
-            <span>← → / A D: Move</span>
-            <span>SPACE / ↑: Jump</span>
-            <span>R: Restart</span>
-          </div>
-        </div>
-        <p id="gameMessage" class="game-message">Press Space or ↑ to start.</p>
-      </section>
-    </main>
-
-    <footer>
-      <div class="footer-hint">
-        <span><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Navigate</span>
-        <span><kbd>ENTER</kbd> Select</span>
-        <span><kbd>ESC</kbd> Back</span>
+      <div id="empty" class="empty">
+        <div class="empty-icon">◇</div>
+        <h3>Your library is waiting</h3>
+        <p>Select a game file to see its name and size here.</p>
       </div>
-      <span class="footer-label">PS4 EMULATOR • BROWSER EDITION</span>
-    </footer>
-  </div>
+
+      <div id="games" class="games"></div>
+    </section>
+
+    <section class="notice">
+      <h2>Emulation status</h2>
+      <p id="emulator-status">
+        No PS4 emulation core is connected. Selecting a file does not
+        install or launch a game.
+      </p>
+      <p class="small">
+        PKG support, firmware requirements, and game compatibility depend
+        on the real emulator. This web app does not decrypt, install, or
+        execute PS4 packages.
+      </p>
+    </section>
+  </main>
+
+  <footer>PS4 EMULATOR · PERSONAL PROJECT</footer>
+  <script src="./app.js"></script>
 </body>
 </html>
